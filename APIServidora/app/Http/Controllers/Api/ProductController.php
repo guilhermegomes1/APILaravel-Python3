@@ -14,7 +14,7 @@ class ProductController extends Controller
 
     public function index(){
 
-        $data = ['data' => $this->produto->get()];
+        $data = ['data' => $this->produto->with('categorias')->get()];
         return response()->json($data);
     }
     public function show(Produto $id){
@@ -22,9 +22,12 @@ class ProductController extends Controller
         return response()->json($data);
     }
     public function store(Request $request){
-        $productData = $request->all();
         try{
-            $this->produto->create($productData);
+            $this->produto->create([
+                'name'=>$request->name,
+                'description'=>$request->description,
+                'categoria_id'=>$request->categoria_id,
+            ]);
             return response()->json(['msg'=>"Deu Certo!"], 201);
         }catch(\Exception $e){
             if(config('app.debug')){

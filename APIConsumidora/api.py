@@ -13,27 +13,31 @@ binary = data.content
 output = json.loads(binary)
 # Menu Area
 os.system('clear')
-def Menu():
+def menu():
         print("--> Bem vindo ao apipy 1.0 <--")
         print( "(Menu)")
         print( ">> Use (1) Para Ver Filmes")
         print( ">> Use (2) Para Inserir Filmes")
-        print( ">> Use (3) Para Deletar Filmes")
+        print( ">> Use (3) Para Atualizar Filmes")
+        print( ">> Use (4) Para Deletar Filmes")
         print( ">> Use (0) Para Abortar :/")
-Menu()
+menu()
 valor = input('Resposta :')
 if valor == '1':
     os.system('clear')
     x = 0
     print("\n-----Filmes encontrados-----\n")
     for item in output['data']:
-        print('>> Id:',item['id'],'\n>> Nome: ', item['name'], '\n>> Descrição :', item['description'], '\n')
+        print('>> Id:',item['id'],'\n>> Nome: ', item['name'], '\n>> Descrição :', item['description'], '\n>> Categoria :', item['categorias']['name'])
 elif valor == '2' :
     os.system('clear')
+    print(" >> Use (1) Categoria Ação")
+    print(" >> Use (2) Categoria Romance")
+    categoria = input('Digite o Número da Categoria: ')
     nome = input("Digite o Nome do Filme :")
     desc = input("Digite a Descrição do Filme :")
-    requests.post('http://localhost:8000/api/filmes', data = {'name':nome, 'description': desc})
-elif valor == '3':
+    requests.post('http://localhost:8000/api/filmes', data = {'name':nome, 'description': desc, 'categoria_id':categoria})
+elif valor == '4':
     os.system('clear')
     print(" >> Use (1) Deletar Apenas Um Filme")
     print(" >> Use (2) Para Deletar Todos os Filmes")
@@ -46,6 +50,15 @@ elif valor == '3':
         requests.delete('http://localhost:8000/api/filmes')
     else :
         Menu()
+elif valor == '3':
+    os.system('clear')
+    print(" >> Use (1) Categoria Ação")
+    print(" >> Use (2) Categoria Romance")
+    identifier = input('Digite o ID do Filme Que Você Deseja Alterar : ')
+    categoriaN = input('Nova Categoria: ')
+    title = input('Novo Titulo : ')
+    des = input('Nova Descrição : ')
+    requests.put('http://localhost:8000/api/filmes/' + identifier , data = {'id': identifier, 'name':title, 'description': des, 'categoria_id':categoriaN})
 else :
     print("By by :)")
 #Percorrendo dados

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Produto;
-
+use App\Categoria;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -13,7 +13,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
-        $this->call(ProductTableSeeder::class);
+        $this->call(CategoriaSeeder::class);
+        // $this->call(ProductTableSeeder::class);
+        
 
     }
 }
