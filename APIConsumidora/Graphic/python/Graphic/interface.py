@@ -35,7 +35,7 @@ def get():
 #Window Configuration
 window = Tk()
 window.title("Game Of Python 3.0")
-canvas = Canvas(window.resizable(0,0), height='500', width='500')
+canvas = Canvas(window, height='500', width='500')
 canvas.pack()
 #Background
 background = PhotoImage(file='teste.png')
