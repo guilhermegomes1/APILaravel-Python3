@@ -6,10 +6,26 @@ import os
 
 #Get/Post
 def post(nome):
-    if requests.post('http://localhost:8000/api/reis', data = {'name':nome}):
-        return('Enviado com Sucesso!')
-    else :
-        return('Deu Algum erro ai...')
+        if nome != '':
+                if requests.post('http://localhost:8000/api/reis', data = {'name':nome}):
+                        labelFeed['text'] = "Rei indicado com sucesso!"
+                        labelFeed['fg'] = "white"
+                        labelFeed['bg'] = 'green'
+                        frame2['bg'] = 'green'
+                
+                        labelFeed['font'] = 'none 12 bold'
+                else :
+                        labelFeed['text'] = "Não foi possível indicar esse bastardo"
+                        labelFeed['bg'] = 'red'
+                        labelFeed['fg'] = "white"
+                        labelFeed['font'] = 'none 12 bold'
+                        frame2['bg'] = 'red'
+        else:
+                labelFeed['text'] = "Estamos sem rei!!!!"
+                labelFeed['bg'] = '#ff531a'
+                labelFeed['fg'] = "white"
+                labelFeed['font'] = 'none 12 bold'
+                frame2['bg'] = '#ff531a'
 def get():
     data = requests.get('http://localhost:8000/api/reis')
     binary = data.content
@@ -47,7 +63,9 @@ button.place(relx=0.7, relwidth=0.30, relheight=1)
 button2 = Button(frameList2, text="Saudação",command=lambda : get())
 button2.place(relwidth=1, relheight=1)
 #Labels
-labelList = Label(frameList, bg='white')
+labelList = Label(frameList)
 labelList.place(relwidth=1, relheight=1)
 
+labelFeed = Label(frame2, text='')
+labelFeed.place(relwidth=1, relheight=1)
 window.mainloop()
